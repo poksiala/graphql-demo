@@ -1,17 +1,43 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
- 
-// Construct a schema, using GraphQL schema language
+import { catBreedsResolver, catBreedResolver, catBreedSearchResolver } from './resolvers/catBreed';
+import initIfEmpty from './initdb';
+
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017')
+  .then(() => {
+    console.log('conected to database')
+    initIfEmpty()
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
+
 const typeDefs = gql`
+  type CatBreed {
+    id: ID
+    name: String
+    description: String
+    temperament: String
+    origin: String
+  }
+
   type Query {
     hello: String
+    catBreeds: [CatBreed]
+    catBreed(id: ID): CatBreed
+    catBreedSearch(name: String): [CatBreed]
   }
 `;
  
-// Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
+    catBreeds: catBreedsResolver,
+    catBreed: catBreedResolver,
+    catBreedSearch: catBreedSearchResolver
   },
 };
  
