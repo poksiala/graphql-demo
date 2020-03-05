@@ -5,7 +5,7 @@ import initIfEmpty from './initdb';
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017')
+mongoose.connect('mongodb://mongo:27017')
   .then(() => {
     console.log('conected to database')
     initIfEmpty()

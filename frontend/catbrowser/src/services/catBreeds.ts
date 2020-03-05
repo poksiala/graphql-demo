@@ -2,7 +2,7 @@ import Breed from '../types/breed';
 import ApolloClient, { gql } from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql'
+    uri: 'https://breeds.thisno.work/graphql'
 });
 
 const getAll = async (): Promise<Array<Breed>> => {
